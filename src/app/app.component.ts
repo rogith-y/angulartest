@@ -12,5 +12,9 @@ export class AppComponent implements OnInit {
     if(this.title==='nottestapp'){
       console.log('test')
     }
+    else
+    {
+      console.log('not test')
+    }
   }
 }
