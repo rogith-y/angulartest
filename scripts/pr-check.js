@@ -21,7 +21,7 @@ function getCoverage(branch) {
   runCommand(`git checkout ${branch}`);
 
   console.log("Running Angular tests to generate coverage...");
-  runCommand("ng test --code-coverage --coverageReporters=json-summary");
+  runCommand("npm run test --coverage --coverageReporters=json-summary");
 
   const coverageFile = "./coverage/coverage-summary.json";
   if (!fs.existsSync(coverageFile)) {
