@@ -23,7 +23,7 @@ function getCoverage(branch) {
   console.log("Running Angular tests to generate coverage...");
   runCommand("npm run test --coverage --coverageReporters=json-summary");
 
-  const coverageFile = "./coverage/coverage-final.json";
+  const coverageFile = "./coverage/coverage-summary.json";
   if (!fs.existsSync(coverageFile)) {
     console.error(`Error: Coverage file not found for branch ${branch}`);
     process.exit(1);
