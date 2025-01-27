@@ -1,33 +1,38 @@
 name: PR Quality Check
 
 on:
- pull_request:
-   branches:
-     - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
- quality-check:
-   runs-on: ubuntu-latest
+  quality-check:
+    runs-on: ubuntu-latest
 
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-     - name: Set up Node.js
-       uses: actions/setup-node@v3
-       with:
-         node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-     - name: Install dependencies
-       run: npm ci --force
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
-     - name: Run tests and linting
-       run: |
-         npm run lint -- --format json --output-file eslint-report.json
-         npm run test --coverage --coverageReporters=json-summary
+      - name: Install dependencies
+        run: npm ci --force
 
-     - name: Compare Coverage and Lint
-       run: node scripts/pr-check.js
-       env:
-         BASE_BRANCH: main
-         CURRENT_BRANCH: ${{ github.head_ref }}
+      - name: Run tests and linting
+        run: |
+          npm run lint -- --format json --output-file eslint-report.json
+          ng test --code-coverage --browsers=ChromeHeadless
+
+      - name: Compare Coverage and Lint
+        run: node scripts/pr-check.js
+        env:
+          BASE_BRANCH: main
+          CURRENT_BRANCH: ${{ github.head_ref }}
