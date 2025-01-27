@@ -29,7 +29,7 @@ jobs:
       - name: Run tests and linting
         run: |
           npm run lint -- --format json --output-file eslint-report.json
-          ng test --code-coverage --coverageReporters=json-summary
+          npm run test --coverage --coverageReporters=json-summary
 
       - name: Compare Coverage and Lint
         run: node scripts/pr-check.js
